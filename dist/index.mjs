@@ -13,7 +13,7 @@ var executeArbitrageAction = {
   similes: ["TRADE_ARBITRAGE", "RUN_ARBITRAGE"],
   description: "Execute arbitrage trades across markets",
   validate: async (runtime, _message) => {
-    return runtime.getSetting("arbitrage.walletPrivateKey") !== undefined;
+    return runtime.getSetting("arbitrage.walletPrivateKey") !== void 0;
   },
   handler: async (runtime, _message) => {
     const service = runtime.getService(ServiceType.ARBITRAGE);
@@ -71,11 +71,11 @@ var Arbitrage = class {
     this.wallet = wallet;
     this.flashbotsProvider = flashbotsProvider;
     this.bundleExecutorContract = bundleExecutorContract;
-    this.bundleEntries = [];
-    this.thresholds = DEFAULT_THRESHOLDS;
-    this.MAX_RETRIES = 3;
-    this.RETRY_DELAY = 1e3;
   }
+  bundleEntries = [];
+  thresholds = DEFAULT_THRESHOLDS;
+  MAX_RETRIES = 3;
+  RETRY_DELAY = 1e3;
   async evaluateMarkets(marketsByToken) {
     elizaLogger.log("Starting market evaluation...");
     const opportunities = [];
@@ -412,13 +412,11 @@ async function getGasPriceInfo(provider) {
   return { currentGasPrice, avgGasPrice };
 }
 var ArbitrageService = class extends Service {
-  constructor() {
-    super(...arguments);
-    this.arbitrage = null;
-    this.wsConnection = null;
-    this.marketsByToken = {};
-    this.currentBlock = 0;
-  }
+  arbitrage = null;
+  wsConnection = null;
+  marketsByToken = {};
+  currentBlock = 0;
+  runtime;
   static get serviceType() {
     return ServiceType.ARBITRAGE;
   }
