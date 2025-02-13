@@ -1,5 +1,5 @@
 {
-    "name": "@elizaos/plugin-arbitrage",
+    "name": "@elizaos-plugins/plugin-arbitrage",
     "version": "0.1.9",
     "description": "Arbitrage trading plugin for Eliza",
     "main": "dist/index.js",
@@ -47,6 +47,5 @@
         "vitest": "^3.0.0",
         "@vitest/coverage-v8": "^2.1.4"
     },
-    "peerDependencies": {
-    }
+    "peerDependencies": {}
 }
