@@ -23,3 +23,8 @@ export const handleArbitrageError = (error: Error): void => {
     console.error(`Arbitrage Error: ${error.message}`);
     // Add any specific error handling logic
 };
+
+// Time utilities
+export const now = (): number => {
+    return Math.floor(Date.now() / 1000);
+};

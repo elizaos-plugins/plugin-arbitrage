@@ -1,14 +1,14 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, mock, beforeEach } from 'bun:test';
 import { ArbitrageService } from '../../src/services/ArbitrageService';
-import { ServiceType, IAgentRuntime } from '@elizaos/core';
+import { ServiceType, AgentRuntime } from '@elizaos/core';
 
 describe('ArbitrageService', () => {
     let arbitrageService: ArbitrageService;
-    let mockRuntime: IAgentRuntime;
+    let mockRuntime: AgentRuntime;
 
     beforeEach(() => {
         mockRuntime = {
-            getSetting: vi.fn((key: string) => {
+            getSetting: mock((key: string) => {
                 switch (key) {
                     case 'ARBITRAGE_ETHEREUM_WS_URL':
                         return 'ws://test.com';
@@ -22,15 +22,15 @@ describe('ArbitrageService', () => {
                         return undefined;
                 }
             }),
-            getLogger: vi.fn().mockReturnValue({
-                log: vi.fn(),
-                error: vi.fn(),
-                warn: vi.fn()
+            getLogger: mock().mockReturnValue({
+                log: mock(),
+                error: mock(),
+                warn: mock()
             }),
-            getBlocksApi: vi.fn().mockReturnValue({
-                getRecentBlocks: vi.fn().mockResolvedValue([])
+            getBlocksApi: mock().mockReturnValue({
+                getRecentBlocks: mock().mockResolvedValue([])
             })
-        } as unknown as IAgentRuntime;
+        } as unknown as AgentRuntime;
 
         arbitrageService = new ArbitrageService();
     });
@@ -41,7 +41,7 @@ describe('ArbitrageService', () => {
         });
 
         it('should throw error if required settings are missing', async () => {
-            mockRuntime.getSetting = vi.fn().mockReturnValue(undefined);
+            mockRuntime.getSetting = mock().mockReturnValue(undefined);
             await expect(arbitrageService.initialize(mockRuntime)).rejects.toThrow();
         });
     });

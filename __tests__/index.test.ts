@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'bun:test';
 import arbitragePlugin from '../src/index';
 import { executeArbitrageAction } from '../src/actions/arbitrageAction';
 import { marketProvider } from '../src/providers/marketProvider';

@@ -1,12 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, mock, beforeEach } from 'bun:test';
 import { executeArbitrageAction } from '../../src/actions/arbitrageAction';
 import { ServiceType } from '@elizaos/core';
 import { ArbitrageService } from '../../src/services/ArbitrageService';
 
 describe('executeArbitrageAction', () => {
     const mockRuntime = {
-        getSetting: vi.fn(),
-        getService: vi.fn()
+        getSetting: mock(),
+        getService: mock()
     };
 
     const mockMessage = {
@@ -17,13 +17,18 @@ describe('executeArbitrageAction', () => {
     };
 
     const mockArbitrageService = {
-        evaluateMarkets: vi.fn(),
-        executeArbitrage: vi.fn()
+        evaluateMarkets: mock(),
+        executeArbitrage: mock()
     };
 
     beforeEach(() => {
-        vi.clearAllMocks();
-        mockRuntime.getService.mockReturnValue(mockArbitrageService);
+        // Reset all mocks
+        mockArbitrageService.evaluateMarkets.mockReset?.();
+        mockArbitrageService.executeArbitrage.mockReset?.();
+        mockRuntime.getSetting.mockReset?.();
+        mockRuntime.getService.mockReset?.();
+        
+        (mockRuntime.getService as any).mockReturnValue(mockArbitrageService);
     });
 
     describe('metadata', () => {
@@ -44,13 +49,13 @@ describe('executeArbitrageAction', () => {
 
     describe('validation', () => {
         it('should validate required settings', async () => {
-            mockRuntime.getSetting.mockReturnValue('test-key');
+            (mockRuntime.getSetting as any).mockReturnValue('test-key');
             const isValid = await executeArbitrageAction.validate(mockRuntime, mockMessage);
             expect(isValid).toBe(true);
         });
 
         it('should fail validation when settings are missing', async () => {
-            mockRuntime.getSetting.mockReturnValue(undefined);
+            (mockRuntime.getSetting as any).mockReturnValue(undefined);
             const isValid = await executeArbitrageAction.validate(mockRuntime, mockMessage);
             expect(isValid).toBe(false);
         });
@@ -66,8 +71,8 @@ describe('executeArbitrageAction', () => {
                 }
             ];
 
-            mockArbitrageService.evaluateMarkets.mockResolvedValue(mockOpportunities);
-            mockArbitrageService.executeArbitrage.mockResolvedValue(true);
+            (mockArbitrageService.evaluateMarkets as any).mockResolvedValue(mockOpportunities);
+            (mockArbitrageService.executeArbitrage as any).mockResolvedValue(true);
 
             const result = await executeArbitrageAction.handler(mockRuntime, mockMessage);
             expect(result).toBe(true);
@@ -76,7 +81,7 @@ describe('executeArbitrageAction', () => {
         });
 
         it('should handle case when no opportunities exist', async () => {
-            mockArbitrageService.evaluateMarkets.mockResolvedValue([]);
+            (mockArbitrageService.evaluateMarkets as any).mockResolvedValue([]);
 
             const result = await executeArbitrageAction.handler(mockRuntime, mockMessage);
             expect(result).toBe(true);
@@ -85,7 +90,7 @@ describe('executeArbitrageAction', () => {
         });
 
         it('should handle evaluation errors', async () => {
-            mockArbitrageService.evaluateMarkets.mockRejectedValue(new Error('Evaluation failed'));
+            (mockArbitrageService.evaluateMarkets as any).mockRejectedValue(new Error('Evaluation failed'));
 
             await expect(executeArbitrageAction.handler(mockRuntime, mockMessage))
                 .rejects.toThrow('Evaluation failed');
@@ -100,8 +105,8 @@ describe('executeArbitrageAction', () => {
                 }
             ];
 
-            mockArbitrageService.evaluateMarkets.mockResolvedValue(mockOpportunities);
-            mockArbitrageService.executeArbitrage.mockRejectedValue(new Error('Execution failed'));
+            (mockArbitrageService.evaluateMarkets as any).mockResolvedValue(mockOpportunities);
+            (mockArbitrageService.executeArbitrage as any).mockRejectedValue(new Error('Execution failed'));
 
             await expect(executeArbitrageAction.handler(mockRuntime, mockMessage))
                 .rejects.toThrow('Execution failed');

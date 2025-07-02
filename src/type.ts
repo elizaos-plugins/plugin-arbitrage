@@ -1,5 +1,5 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { IAgentRuntime, Memory, Provider } from "@elizaos/core";
+import { AgentRuntime, Memory, Provider } from "@elizaos/core";
 
 // Core Arbitrage Types
 export interface CrossedMarketDetails {
@@ -49,12 +49,12 @@ export interface EthMarket extends MarketType {
 // Eliza Plugin Integration Types
 export interface ArbitrageAction {
     name: string;
-    handler: (runtime: IAgentRuntime, message: Memory) => Promise<void>;
-    validate: (runtime: IAgentRuntime, message: Memory) => Promise<boolean>;
+    handler: (runtime: AgentRuntime, message: Memory) => Promise<void>;
+    validate: (runtime: AgentRuntime, message: Memory) => Promise<boolean>;
 }
 
 export interface ArbitrageProvider extends Provider {
-    get: (runtime: IAgentRuntime, message: Memory) => Promise<ArbitrageState>;
+    get: (runtime: AgentRuntime, message: Memory) => Promise<ArbitrageState>;
 }
 
 export interface ArbitrageState {
@@ -114,7 +114,7 @@ export interface TransferEvent {
 }
 
 // Add this to your existing types
-export interface ExtendedAgentRuntime extends IAgentRuntime {
+export interface ExtendedAgentRuntime extends AgentRuntime {
     wallet: any; // Replace 'any' with proper wallet type
     flashbotsProvider: any; // Replace 'any' with proper provider type
     bundleExecutorContract: any;

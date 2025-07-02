@@ -1,4 +1,4 @@
-import { Service, ServiceType, IAgentRuntime } from "@elizaos/core";
+import { Service, ServiceType, AgentRuntime } from "@elizaos/core";
 import { Arbitrage } from "../core/Arbitrage";
 import { WebSocket } from 'ws';
 import { CrossedMarketDetails, MarketsByToken } from "../type";
@@ -12,25 +12,23 @@ declare module "@elizaos/core" {
     interface ServiceTypeMap {
         arbitrage: Service & ArbitrageService;
     }
-
-    export enum ServiceType {
-        ARBITRAGE = "arbitrage"
-    }
 }
+
+const ServiceType_ARBITRAGE = "arbitrage" as const;
 
 export class ArbitrageService extends Service {
     private arbitrage: Arbitrage | null = null;
     private wsConnection: WebSocket | null = null;
     private marketsByToken = {};
     private currentBlock = 0;
-    private runtime!: IAgentRuntime;
+    protected runtime!: AgentRuntime;
 
-    static get serviceType(): ServiceType {
-        return ServiceType.ARBITRAGE;
+    static get serviceType(): string {
+        return ServiceType_ARBITRAGE;
     }
 
-    get serviceType(): ServiceType {
-        return ServiceType.ARBITRAGE;
+    get serviceType(): string {
+        return ServiceType_ARBITRAGE;
     }
 
     // Remove unnecessary constructor
@@ -38,7 +36,7 @@ export class ArbitrageService extends Service {
     //     super();
     // }
 
-    async initialize(runtime: IAgentRuntime): Promise<void> {
+    async initialize(runtime: AgentRuntime): Promise<void> {
         this.runtime = runtime;
 
         // Get WebSocket URL with multiple fallback options
