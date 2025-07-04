@@ -26,7 +26,7 @@ The ElizaOS Arbitrage Plugin monitors multiple decentralized exchanges (DEXs) li
 ## Installation
 
 ```bash
-npm install @elizaos-plugins/plugin-arbitrage
+bun install @elizaos/plugin-arbitrage
 ```
 
 ## Configuration
@@ -35,34 +35,29 @@ To use the plugin, you need to configure your ElizaOS character with the necessa
 
 ```json
 {
-    "name": "Trader",
-    "settings": {
-        "secrets": {
-            "EVM_PRIVATE_KEY": "YOUR_PRIVATE_KEY_HERE",
-            "FLASHBOTS_RELAY_SIGNING_KEY": "YOUR_FLASHBOTS_KEY_HERE",
-            "BUNDLE_EXECUTOR_ADDRESS": "YOUR_EXECUTOR_ADDRESS_HERE"
-        },
-        "arbitrage": {
-            "ethereumWsUrl": "YOUR_ETH_WSS_URL",
-            "rpcUrl": "YOUR_ETH_RPC_URL"
-        }
+  "name": "Trader",
+  "settings": {
+    "secrets": {
+      "ARBITRAGE_EVM_PRIVATE_KEY": "YOUR_PRIVATE_KEY_HERE",
+      "FLASHBOTS_RELAY_SIGNING_KEY": "YOUR_FLASHBOTS_KEY_HERE",
+      "BUNDLE_EXECUTOR_ADDRESS": "YOUR_EXECUTOR_ADDRESS_HERE"
     },
-    "plugins": [
-        "@elizaos/plugin-arbitrage",
-        "@elizaos/plugin-evm"
-    ]
+    "ARBITRAGE_ETHEREUM_WS_URL": "YOUR_ETH_WSS_URL",
+    "ARBITRAGE_EVM_PROVIDER_URL": "YOUR_ETH_RPC_URL"
+  },
+  "plugins": ["@elizaos/plugin-arbitrage"]
 }
 ```
 
 ### Required Settings
 
-| Setting | Description |
-|---------|-------------|
-| `EVM_PRIVATE_KEY` | Private key for your Ethereum wallet (keep this secure!) |
-| `FLASHBOTS_RELAY_SIGNING_KEY` | Signing key for Flashbots bundles |
-| `BUNDLE_EXECUTOR_ADDRESS` | Address of your bundle executor contract |
-| `ethereumWsUrl` | WebSocket URL for your Ethereum node |
-| `rpcUrl` | RPC URL for your Ethereum node |
+| Setting                       | Description                                                         |
+| ----------------------------- | ------------------------------------------------------------------- |
+| `ARBITRAGE_EVM_PRIVATE_KEY`   | Private key for your Ethereum wallet (keep this secure!)            |
+| `FLASHBOTS_RELAY_SIGNING_KEY` | Signing key for Flashbots bundles                                   |
+| `BUNDLE_EXECUTOR_ADDRESS`     | Address of your bundle executor contract                            |
+| `ARBITRAGE_ETHEREUM_WS_URL`   | WebSocket URL for your Ethereum node (optional if RPC URL provided) |
+| `ARBITRAGE_EVM_PROVIDER_URL`  | RPC URL for your Ethereum node (fallback if WS not provided)        |
 
 ## Usage
 
@@ -89,10 +84,10 @@ You can customize trading parameters by modifying the thresholds in `src/config/
 
 ```typescript
 export const DEFAULT_THRESHOLDS: MarketThresholds = {
-    minProfitThreshold: BigNumber.from("100000000000000"), // 0.0001 ETH
-    maxTradeSize: BigNumber.from("1000000000000000000"), // 1 ETH
-    gasLimit: 500000,
-    minerRewardPercentage: 90
+  minProfitThreshold: BigNumber.from("100000000000000"), // 0.0001 ETH
+  maxTradeSize: BigNumber.from("1000000000000000000"), // 1 ETH
+  gasLimit: 500000,
+  minerRewardPercentage: 90,
 };
 ```
 

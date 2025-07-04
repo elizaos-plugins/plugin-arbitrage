@@ -1,4 +1,4 @@
 [test]
-preload = "./__tests__/setup.ts"
+preload = "./src/__tests__/setup.ts"
 coverage = true
 coverageThreshold = 95

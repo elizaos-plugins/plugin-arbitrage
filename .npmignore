@@ -1,44 +1,7 @@
-# Source files
-src/
-__tests__/
+*
 
-# Configuration files
-tsconfig.json
-tsup.config.ts
-bunfig.toml
-vitest.config.ts
-.prettierrc
-.eslintrc*
-
-# IDE
-.vscode/
-.idea/
-
-# Environment
-.env
-.env.*
-
-# Logs
-logs/
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Test coverage
-coverage/
-.nyc_output/
-
-# Git
-.git/
-.gitignore
-
-# Docs
-*.md
-docs/
-examples/
-migration-guides/
-
-# CI/CD
-.github/
+!dist/**
+!package.json
+!README.md
+!tsup.config.ts
+!LICENSE

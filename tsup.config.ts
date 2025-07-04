@@ -1,12 +1,12 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ['src/index.ts'],
-  format: ['esm'],
-  dts: true,
-  splitting: false,
+  entry: ["src/index.ts"],
+  outDir: "dist",
+  tsconfig: "./tsconfig.build.json", // Use build-specific tsconfig
   sourcemap: true,
   clean: true,
-  treeshake: true,
-  target: 'node18'
+  format: ["esm"], // ESM output format
+  dts: true,
+  external: ["dotenv", "fs", "path", "https", "http", "@elizaos/core", "zod"],
 });

@@ -1,11 +1,11 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import {
-    MarketType as BaseMarketType,
-    EthMarket as BaseEthMarket,
-    MarketPair as BaseMarketPair,
-    CrossedMarketDetails as BaseCrossedMarketDetails,
-    MarketsByToken as BaseMarketsByToken,
-    BuyCalls as BaseBuyCalls
+  MarketType as BaseMarketType,
+  EthMarket as BaseEthMarket,
+  MarketPair as BaseMarketPair,
+  CrossedMarketDetails as BaseCrossedMarketDetails,
+  MarketsByToken as BaseMarketsByToken,
+  BuyCalls as BaseBuyCalls,
 } from "../type";
 
 export type EthMarket = BaseEthMarket;

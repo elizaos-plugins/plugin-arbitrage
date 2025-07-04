@@ -35,3 +35,9 @@ coverage/
 *.tmp
 *.temp
 .cache/
+
+# ElizaOS specific
+.elizadb
+.turbo
+.turbo-tsconfig.json
+tsconfig.tsbuildinfo

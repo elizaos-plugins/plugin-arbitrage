@@ -1,53 +1,119 @@
 {
-    "name": "@elizaos-plugins/plugin-arbitrage",
-    "version": "1.0.0",
-    "description": "Arbitrage trading plugin for ElizaOS",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.mjs",
-            "require": "./dist/index.js",
-            "default": "./dist/index.js"
-        }
-    },
-    "scripts": {
-        "clean": "rm -rf dist",
-        "build": "bun tsup",
-        "dev": "bun tsup --watch",
-        "test": "bun test",
-        "test:watch": "bun test --watch",
-        "test:coverage": "bun test --coverage"
-    },
-    "dependencies": {
-        "@elizaos/core": "^1.0.0",
-        "@elizaos/adapter-sqlite": "^1.0.0",
-        "@ethersproject/abi": "^5.7.0",
-        "@ethersproject/abstract-provider": "^5.7.0",
-        "@ethersproject/address": "^5.7.0",
-        "@ethersproject/bignumber": "^5.7.0",
-        "@ethersproject/contracts": "^5.7.0",
-        "@ethersproject/providers": "^5.7.2",
-        "@ethersproject/units": "^5.7.0",
-        "@ethersproject/wallet": "^5.7.0",
-        "@flashbots/ethers-provider-bundle": "0.6.2",
-        "dotenv": "^16.4.7",
-        "ethers": "5.7.2",
-        "lodash": "^4.17.21",
-        "ws": "^8.18.0"
-    },
-    "devDependencies": {
-        "@types/lodash": "^4.17.14",
-        "@types/node": "^22.10.9",
-        "@types/ws": "^8.5.13",
-        "rimraf": "^5.0.5",
-        "typescript": "^5.7.3",
-        "@types/dotenv": "^8.2.0",
-        "tsup": "^8.0.2",
-        "@types/bun": "^1.0.0"
-    },
-    "peerDependencies": {
-        "@elizaos/core": "^1.0.0"
+  "name": "@elizaos/plugin-arbitrage",
+  "version": "1.0.0",
+  "description": "Arbitrage trading plugin for ElizaOS",
+  "author": "ElizaOS Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elizaos/eliza.git"
+  },
+  "keywords": [
+    "elizaos",
+    "plugin",
+    "arbitrage",
+    "trading",
+    "dex",
+    "ethereum"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "prettier --write ./src",
+    "clean": "rm -rf dist .turbo node_modules .turbo-tsconfig.json tsconfig.tsbuildinfo",
+    "format": "prettier --write ./src",
+    "format:check": "prettier --check ./src",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage"
+  },
+  "dependencies": {
+    "@elizaos/core": "latest",
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/abstract-provider": "^5.7.0",
+    "@ethersproject/address": "^5.7.0",
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/contracts": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
+    "@ethersproject/units": "^5.7.0",
+    "@ethersproject/wallet": "^5.7.0",
+    "@flashbots/ethers-provider-bundle": "0.6.2",
+    "dotenv": "^16.4.7",
+    "ethers": "5.7.2",
+    "lodash": "^4.17.21",
+    "p-limit": "^3.1.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.14",
+    "@types/node": "^22.10.9",
+    "@types/ws": "^8.5.13",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.7.3",
+    "@types/dotenv": "^8.2.0",
+    "tsup": "8.3.5",
+    "prettier": "^3.0.0",
+    "bun": "^1.2.15",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "@elizaos/core": "latest"
+  },
+  "agentConfig": {
+    "pluginType": "elizaos:plugin:1.0.0",
+    "pluginParameters": {
+      "ARBITRAGE_ETHEREUM_WS_URL": {
+        "type": "string",
+        "description": "WebSocket URL for Ethereum connection",
+        "required": false,
+        "sensitive": true
+      },
+      "ARBITRAGE_EVM_PROVIDER_URL": {
+        "type": "string",
+        "description": "RPC URL for EVM provider (fallback if WS not provided)",
+        "required": false,
+        "sensitive": true
+      },
+      "ARBITRAGE_EVM_PRIVATE_KEY": {
+        "type": "string",
+        "description": "Private key for the arbitrage wallet",
+        "required": true,
+        "sensitive": true
+      },
+      "FLASHBOTS_RELAY_SIGNING_KEY": {
+        "type": "string",
+        "description": "Signing key for Flashbots relay",
+        "required": true,
+        "sensitive": true
+      },
+      "BUNDLE_EXECUTOR_ADDRESS": {
+        "type": "string",
+        "description": "Address of the bundle executor contract",
+        "required": true,
+        "sensitive": false
+      }
+    }
+  }
 }
