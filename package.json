@@ -1,6 +1,6 @@
 {
   "name": "@elizaos/plugin-arbitrage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Arbitrage trading plugin for ElizaOS",
   "author": "ElizaOS Contributors",
   "license": "MIT",
