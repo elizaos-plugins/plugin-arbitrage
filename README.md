@@ -2,6 +2,12 @@
 
 A powerful DEX arbitrage trading plugin for ElizaOS, designed to identify and automatically execute profitable cross-market trading opportunities on Ethereum-based decentralized exchanges.
 
+## Attribution
+
+This plugin was originally created by [@mmarfinetz](https://github.com/mmarfinetz) (Twitter: [@mmarfinetz7](https://twitter.com/mmarfinetz7)).
+
+Original PR: [elizaOS/eliza#2784](https://github.com/elizaOS/eliza/pull/2784)
+
 ## Overview
 
 The ElizaOS Arbitrage Plugin monitors multiple decentralized exchanges (DEXs) like Uniswap and Sushiswap for price discrepancies in token pairs. When it identifies a profitable arbitrage opportunity that exceeds the configured threshold, it automatically executes the trade using Flashbots bundles to maximize profits and minimize risk.
@@ -111,3 +117,15 @@ The plugin consists of several key components:
 - Test with small amounts before deploying with significant capital
 - Monitor gas costs to ensure profitability
 - Implement circuit breakers for market volatility
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the same license as the ElizaOS project.
+
+## Author
+
+Created by [@mmarfinetz](https://github.com/mmarfinetz) (Twitter: [@mmarfinetz7](https://twitter.com/mmarfinetz7))
